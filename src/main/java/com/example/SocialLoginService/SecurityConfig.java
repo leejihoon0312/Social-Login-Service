@@ -37,14 +37,14 @@ public class SecurityConfig {
                 new CustomAuthenticationFilter(authenticationManager(authenticationConfiguration,authenticationManagerBuilder));
         customAuthenticationFilter.setFilterProcessesUrl("/login");  //  /login 요청시 AuthenticationFilter 가서 처리를 합니다.
         customAuthenticationFilter.setPostOnly(true); // 항상 POST 처리
-        customAuthenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler); // 성공시 핸들러 설정
-        customAuthenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler); // 실패시 핸들러 설정
+        customAuthenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler); // 실패시 핸들러 설정
+        customAuthenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler); // 성공시 핸들러 설정
 
 
         http.csrf().disable(); // POST 가능하게 설정
 
-        http.authorizeRequests() // 인증이 된 경우에만 접근을 허용하는데
-                .anyRequest()  // 인증된 어떤 요청이든 오던지
+        http.authorizeRequests() // 시큐리티 처리에 HttpServletRequest 를 이용한다는 것을 의미합니다.
+                .anyRequest()  // 어떤 요청이든 오던지
                 .permitAll()  // 허용하라.
                 .and() // 또한
                 .oauth2Login() // 소셜로그인을 진행하는데

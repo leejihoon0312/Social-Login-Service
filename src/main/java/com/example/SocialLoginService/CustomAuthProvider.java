@@ -22,6 +22,7 @@ public class CustomAuthProvider implements AuthenticationProvider {
         String username = authentication.getName();
         String password = (String) authentication.getCredentials();
 
+
         System.out.println("CustomAuthProvider username = " + username);
         System.out.println("CustomAuthProvider password = " + password);
 
@@ -29,13 +30,17 @@ public class CustomAuthProvider implements AuthenticationProvider {
         CustomIntegratedLogin userDetails = (CustomIntegratedLogin) customUserDetailsService.loadUserByUsername(username);
 
         System.out.println("userDetails.getPassword() = " + userDetails.getPassword());
+        System.out.println("userDetails.getUsername() = " + userDetails.getUsername());
 
         // PW 검사
         if (!passwordEncoder.matches(password, userDetails.getPassword())) {
             throw new BadCredentialsException("Provider - authenticate() : 비밀번호가 일치하지 않습니다.");
         }
 
-        return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        System.out.println("ok");
+
+//        return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
     }
 
     @Override
